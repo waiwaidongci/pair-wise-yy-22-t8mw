@@ -2,5 +2,19 @@ export const ERROR_MESSAGES = {
   AUTH_REQUIRED: "请先登录后再继续操作",
   RBAC_DENIED: "当前角色没有执行该动作的权限",
   VALIDATION_FAILED: "表单字段缺失或格式错误",
-  RATE_LIMITED: "请求过于频繁，请稍后再试"
+  RATE_LIMITED: "请求过于频繁，请稍后再试",
+  SLOT_OCCUPIED: "该时段已被占用",
+  WORKSTATION_NOT_FOUND: "工位不存在",
+  WORKSTATION_CLOSED: "工位未开放或已停用",
+  OUTSIDE_TIME_WINDOW: "预约时段不在工位时间窗内",
+  CAPACITY_EXCEEDED: "工位容量已满",
+  SCHEDULE_NOT_FOUND: "排程不存在",
+  SCHEDULE_INVALID: "排程已失效，需重新排程",
+  STEP_NOT_SCHEDULED: "步骤尚未排程，不能开始",
+  STEP_NOT_STARTABLE: "还未到排程开始时间，不能提前进入进行中",
+  STEP_NOT_ASSIGNED: "该步骤未分配给当前修复师",
+  STEP_STATE_INVALID: "步骤状态不允许该操作",
+  APPLICATION_NOT_FOUND: "排程申请不存在",
+  APPLICATION_NOT_RETRYABLE: "当前申请状态不可重试",
+  INVALIDATION_TRIGGERED: "相关未开始排程已失效，请重新排程"
 };

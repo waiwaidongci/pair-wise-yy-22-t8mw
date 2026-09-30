@@ -62,3 +62,49 @@ CREATE TABLE IF NOT EXISTS audit_log (
   target_id TEXT,
   created_at TEXT
 );
+
+CREATE TABLE IF NOT EXISTS workstation (
+  id INTEGER PRIMARY KEY,
+  code TEXT,
+  name TEXT,
+  capacity INTEGER,
+  window_start TEXT,
+  window_end TEXT,
+  status TEXT,
+  location TEXT
+);
+
+CREATE TABLE IF NOT EXISTS workstation_schedule (
+  id INTEGER PRIMARY KEY,
+  step_id INTEGER,
+  plan_id INTEGER,
+  relic_id INTEGER,
+  workstation_id INTEGER,
+  scheduled_start TEXT,
+  scheduled_end TEXT,
+  status TEXT,
+  occupied_by INTEGER,
+  occupied_by_name TEXT,
+  occupied_at TEXT,
+  version INTEGER,
+  invalid_reason TEXT,
+  created_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS schedule_application (
+  id INTEGER PRIMARY KEY,
+  step_id INTEGER,
+  plan_id INTEGER,
+  relic_id INTEGER,
+  workstation_id INTEGER,
+  requested_start TEXT,
+  requested_end TEXT,
+  status TEXT,
+  attempts INTEGER,
+  last_error_code TEXT,
+  last_error_message TEXT,
+  occupied_by_name TEXT,
+  created_by INTEGER,
+  created_at TEXT,
+  updated_at TEXT
+);

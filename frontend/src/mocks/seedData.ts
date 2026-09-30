@@ -161,5 +161,18 @@ export const mockData = {
       "capture_at": "2026-06-13T09:00:00Z",
       "note": "note 3"
     }
+  ],
+  "workstation": [
+    { "id": 1, "code": "WS-A", "name": "修复台 A", "capacity": 1, "window_start": "09:00", "window_end": "18:00", "status": "ACTIVE", "location": "修复室 1 区" },
+    { "id": 2, "code": "WS-B", "name": "修复台 B", "capacity": 2, "window_start": "09:00", "window_end": "18:00", "status": "ACTIVE", "location": "修复室 1 区" },
+    { "id": 3, "code": "WS-C", "name": "检测工位 C", "capacity": 1, "window_start": "10:00", "window_end": "16:00", "status": "MAINTENANCE", "location": "检测室" },
+    { "id": 4, "code": "WS-D", "name": "装裱工位 D", "capacity": 1, "window_start": "13:00", "window_end": "20:00", "status": "ACTIVE", "location": "装裱室" }
+  ],
+  "workstationSchedule": [
+    { "id": 1, "step_id": 2, "plan_id": 2, "relic_id": 2, "workstation_id": 1, "scheduled_start": "2026-09-30T10:00:00Z", "scheduled_end": "2026-09-30T11:00:00Z", "status": "SCHEDULED", "occupied_by": 1, "occupied_by_name": "调度员 林岚", "occupied_at": "2026-09-30T08:00:00Z", "version": 1, "invalid_reason": null, "created_at": "2026-09-30T08:00:00Z" },
+    { "id": 2, "step_id": 3, "plan_id": 3, "relic_id": 3, "workstation_id": 2, "scheduled_start": "2026-10-01T10:00:00Z", "scheduled_end": "2026-10-01T12:00:00Z", "status": "SCHEDULED", "occupied_by": 1, "occupied_by_name": "调度员 林岚", "occupied_at": "2026-09-30T09:00:00Z", "version": 1, "invalid_reason": null, "created_at": "2026-09-30T09:00:00Z" }
+  ],
+  "scheduleApplication": [
+    { "id": 1, "step_id": 1, "plan_id": 1, "relic_id": 1, "workstation_id": 1, "requested_start": "2026-09-30T10:30:00Z", "requested_end": "2026-09-30T11:30:00Z", "status": "PENDING", "attempts": 1, "last_error_code": "SLOT_OCCUPIED", "last_error_message": "该时段已被占用", "occupied_by_name": "调度员 林岚", "created_by": 1, "created_at": "2026-09-30T09:00:00Z", "updated_at": "2026-09-30T09:00:00Z" }
   ]
 } as const;

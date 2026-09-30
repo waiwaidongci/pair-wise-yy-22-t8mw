@@ -161,5 +161,11 @@ export const seed = {
       "capture_at": "2026-06-13T09:00:00Z",
       "note": "note 3"
     }
+  ],
+  "workstation": [
+    { "id": 1, "code": "WS-A", "name": "修复台 A", "capacity": 1, "window_start": "09:00", "window_end": "18:00", "status": "ACTIVE", "location": "修复室 1 区" },
+    { "id": 2, "code": "WS-B", "name": "修复台 B", "capacity": 2, "window_start": "09:00", "window_end": "18:00", "status": "ACTIVE", "location": "修复室 1 区" },
+    { "id": 3, "code": "WS-C", "name": "检测工位 C", "capacity": 1, "window_start": "10:00", "window_end": "16:00", "status": "MAINTENANCE", "location": "检测室" },
+    { "id": 4, "code": "WS-D", "name": "装裱工位 D", "capacity": 1, "window_start": "13:00", "window_end": "20:00", "status": "ACTIVE", "location": "装裱室" }
   ]
 } as const;

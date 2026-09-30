@@ -18,5 +18,9 @@ export const routes = [
   {
     "name": "影像版本",
     "route": "/images"
+  },
+  {
+    "name": "工位排程",
+    "route": "/scheduling"
   }
 ] as const;
