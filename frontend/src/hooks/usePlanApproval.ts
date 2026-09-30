@@ -1,8 +1,21 @@
-import { useMemo, useState } from "react";
+import { useCallback } from "react";
+import { useRestorationPlanStore } from "../stores/RestorationPlanStore";
 
-export function usePlanApproval<T>(rows: T[] = []) {
-  const [page, setPage] = useState(1);
-  const pageSize = 8;
-  const pageRows = useMemo(() => rows.slice((page - 1) * pageSize, page * pageSize), [rows, page]);
-  return { page, setPage, pageSize, pageRows, total: rows.length };
+// Experts approve plans; plan content changes invalidate unstarted schedules.
+export function usePlanApproval(headers?: HeadersInit) {
+  const rows = useRestorationPlanStore((state) => state.rows);
+  const message = useRestorationPlanStore((state) => state.message);
+  const approve = useRestorationPlanStore((state) => state.approve);
+  const change = useRestorationPlanStore((state) => state.change);
+
+  const pendingApprovals = rows.filter((plan) => plan.approval_status === "SUBMITTED");
+
+  const approvePlan = useCallback((id: number) => approve(id, headers), [approve, headers]);
+  const changePlan = useCallback(
+    (id: number, patch: { method?: string; risk_assessment?: string; plan_title?: string }) =>
+      change(id, patch, headers),
+    [change, headers]
+  );
+
+  return { rows, pendingApprovals, message, approvePlan, changePlan };
 }

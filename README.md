@@ -52,11 +52,25 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 - 数据库使用命名卷，避免绑定中文路径。
 - 常见问题：端口占用时修改 `.env` 中端口后重启；需要重置数据时执行 `docker compose down -v`。
 
+## 修复室工位排程
+
+方案、步骤与工位通过排程申请（`schedule_request`）串联，角色与规则：
+
+- 调度员（`x-role: SCHEDULER`）把**已批准方案**下的待开始步骤排进有容量和时间窗的工位：`POST /api/schedule-request`。
+- 修复师（`RESTORER`）只能看到并执行分给自己的步骤：`POST /api/restoration-step/:id/start|complete`；排程本身不会把步骤提前置为进行中。
+- 专家（`EXPERT`）继续负责审批：`POST /api/restoration-plan/:id/approve`。
+- 同一时段并发抢占按**先到先得**：先到申请 `CONFIRMED`，后到申请保留为 `PENDING` 并返回 409 `SCHEDULE_SLOT_OCCUPIED` 与占用说明（占用人/时段/容量）。
+- 文物状态变更（`PATCH /api/relic-item/:id/condition`）或已批准方案内容变更（`PATCH /api/restoration-plan/:id`）后，关联方案下**未开始**的排程批量置为 `INVALIDATED` 并清空步骤占位，前端提示重新排程；进行中/已完成步骤不受影响。
+- 占位写入失败（503 `SCHEDULE_WRITE_FAILED`）时原排程和待处理申请都保留，可用 `POST /api/schedule-request/:id/retry` 重试；`INVALIDATED` 申请不可重试，必须重新提交。
+
 ## 枚举/常量出现位置清单
 
 - RelicCondition: constants/RelicCondition、types/RelicCondition、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - PlanApprovalStatus: constants/PlanApprovalStatus、types/PlanApprovalStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 - DamageSeverity: constants/DamageSeverity、types/DamageSeverity、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- StepStatus: constants/StepStatus、models/RestorationStep、constructors、stores、SchedulePage、状态徽章与步骤开始/完成接口共同引用。
+- ScheduleRequestStatus: constants/ScheduleRequestStatus、models/ScheduleRequest、constructors、stores、ScheduleRequestCard 与排程重试/失效逻辑共同引用。
+- UserRole: constants/UserRole、authMiddleware/rbacMiddleware、前端 SessionStore 与角色切换器共同引用。
 
 ## 为什么会牵一发动全身
 
